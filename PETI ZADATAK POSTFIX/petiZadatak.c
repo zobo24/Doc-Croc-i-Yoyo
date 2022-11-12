@@ -58,6 +58,7 @@ int InsertAfter(Position P, Position newElement)
 	return EXIT_SUCCESS;
 }
 
+//Stavi na pocetak poslije head-a UnosPocetak
 int Push(Position Head, double broj)
 {
 	Position newElement = NULL;
@@ -82,6 +83,7 @@ int DeleteAfter(Position P)
 	return EXIT_SUCCESS;
 }
 
+//BrisiPrvi
 int Pop(double* trazeni, Position Head)
 {
 	Position prvi = Head->next;
