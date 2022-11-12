@@ -5,8 +5,9 @@
 
 #define MAX_SIZE 50
 
-/*Napisati program koji iz datoteke cita postfiks izraz i zatim koristenjem stoga racuna
-rezultat.Stog je potrebno realizirati preko vezane liste.*/
+//Napisati program koji iz datoteke cita postfiks izraz 
+//zatim koristenjem stoga racuna rezultat.
+//Stog je potrebno realizirati preko vezane liste.
 
 struct Element;
 typedef struct Element* Position;
