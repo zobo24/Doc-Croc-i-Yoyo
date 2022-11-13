@@ -122,7 +122,7 @@ int Operacija(Position Head, char op)
 	int status2 = EXIT_SUCCESS;
 
 
-	status2 = Pop(&varijabla2, Head);
+	status2 = Pop(&varijabla2, Head); //kada ga makne funkcija vraca 0, ako nije makla program se prekida
 	if (status2 != EXIT_SUCCESS)
 		return -1;
 
@@ -184,7 +184,7 @@ int RacunDat(char* dat)
 	FILE* fp = NULL;
 	int fpDuljina = 0;
 	char* buffer = NULL;
-	char* currentBuffer = NULL;
+	char* readingBuffer = NULL;
 	int procitan_bb = 0;
 	char op = 0; //racunska operacija
 	double vrijednost = 0;
@@ -222,22 +222,22 @@ int RacunDat(char* dat)
 	printf("Postfixi iznose: \n");
 	fclose(fp);
 
-	currentBuffer = buffer;
-	while (strlen(currentBuffer) > 0)
+	readingBuffer = buffer;
+	while (strlen(readingBuffer) > 0)
 	{
-		brojac = sscanf(currentBuffer, " %lf %n", &vrijednost, &procitan_bb); //the function returns the number of variables filled
+		brojac = sscanf(readingBuffer, " %lf %n", &vrijednost, &procitan_bb); //the function returns the number of variables filled
 																			//cita vijednost
 
 		if (brojac == 1)
 		{
 			//stavlja vrijednost na pocetak liste ako je tipa double
 			Push(&Head, vrijednost);
-			currentBuffer += procitan_bb; //i++
+			readingBuffer += procitan_bb; //i++
 		}
 
 		else
 		{
-			sscanf(currentBuffer, " %c %n", &op, &procitan_bb);  //cita znak operacije
+			sscanf(readingBuffer, " %c %n", &op, &procitan_bb);  //cita znak operacije
 			status = Operacija(&Head, op); //Sa statusom napravit provjeru , ukoliko vrati -1 izbrisati listu 
 
 			if (status != EXIT_SUCCESS)
@@ -249,7 +249,7 @@ int RacunDat(char* dat)
 				}
 				return -1;
 			}
-				currentBuffer += procitan_bb; //i++
+				readingBuffer += procitan_bb; //i++
 			}
 		}
 	
