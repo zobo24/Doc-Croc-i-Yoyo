@@ -202,7 +202,7 @@ int RacunDat(char* dat)
 	
 	fseek(fp, 0, SEEK_END);//sets the file position of the stream to a given offset. 
                         //The pointer associated with the file is moved to that offset.
-                        //ide na kraj jer se tamo nalazi clan kojeg prvo trazimo
+                        
 
 	fpDuljina = ftell(fp); //used to get the total size of file
                           // after moving the file pointer at the end of the file
