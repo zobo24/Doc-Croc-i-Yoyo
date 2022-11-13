@@ -191,7 +191,7 @@ int RacunDat(char* dat)
 	int status = 0;
 	int brojac = 0;
 	El Head = { .broj = 0, .next = NULL };
-	fp = fopen("input.txt", "rb");
+	fp = fopen("input.txt", "r");
 
 	if (!fp)
 	{
