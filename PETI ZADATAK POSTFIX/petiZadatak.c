@@ -5,9 +5,8 @@
 
 #define MAX_SIZE 50
 
-//Napisati program koji iz datoteke cita postfiks izraz 
-//zatim koristenjem stoga racuna rezultat.
-//Stog je potrebno realizirati preko vezane liste.
+/*Napisati program koji iz datoteke cita postfiks izraz i zatim koristenjem stoga racuna
+rezultat.Stog je potrebno realizirati preko vezane liste.*/
 
 struct Element;
 typedef struct Element* Position;
@@ -23,12 +22,16 @@ int Push(Position Head, double broj);
 int DeleteAfter(Position P);
 int Pop(double* destinacija, Position Head);
 int Operacija(Position Head, char op);
-int RacunDat();
+int RacunDat(char *dat);
 int CleanUp(Position Head);
 
 int main()
 {
-	RacunDat();
+
+	char dat[] = { 0 };
+	printf("Unesite ime datoteke: ");
+	scanf(" %s", dat);
+	RacunDat(dat);
 	return EXIT_SUCCESS;
 }
 
@@ -57,8 +60,7 @@ int InsertAfter(Position P, Position newElement)
 
 	return EXIT_SUCCESS;
 }
-
-//Stavi na pocetak poslije head-a UnosPocetak
+//Stavlja na pocetka poslije head-a
 int Push(Position Head, double broj)
 {
 	Position newElement = NULL;
@@ -82,19 +84,18 @@ int DeleteAfter(Position P)
 
 	return EXIT_SUCCESS;
 }
-
-//BrisiPrvi
+//skida vrijednost poslije head-a
 int Pop(double* trazeni, Position Head)
 {
-	Position prvi = Head->next;
+	Position clan = Head->next;
 
-	if (!prvi) //prvi == NULL
+	if (!clan) //prvi == NULL
 	{
 		perror("\n Operacije su izvrsene ili nesto nije u redu sa zadanim postfix-om :)!!\n");
 		return -1;
 	}
 
-	*trazeni = prvi->broj;
+	*trazeni = clan->broj; 
 
 	DeleteAfter(Head); 
 
@@ -103,11 +104,9 @@ int Pop(double* trazeni, Position Head)
 
 int CleanUp(Position Head)
 {
-	Position temp = Head;
-
-	while (temp->next != NULL)
+	while (Head->next != NULL)
 	{
-		DeleteAfter(temp);
+		DeleteAfter(Head);
 	}
 
 	return EXIT_SUCCESS;
@@ -115,19 +114,19 @@ int CleanUp(Position Head)
 
 int Operacija(Position Head, char op)
 {
-	double varijabla2 = 0.0;
 	double varijabla1 = 0.0;
+	double varijabla2 = 0.0;
 	double rez = 0.0;
-	int status1 = EXIT_SUCCESS;
-	int status2 = EXIT_SUCCESS;
+	int s_1 = EXIT_SUCCESS;
+	int s_2 = EXIT_SUCCESS;
 
 
-	status2 = Pop(&varijabla2, Head); //kada ga makne funkcija vraca 0, ako nije makla program se prekida
-	if (status2 != EXIT_SUCCESS)
+	s_2 = Pop(&varijabla2, Head);
+	if (s_2 != EXIT_SUCCESS)
 		return -1;
 
-	status1 = Pop(&varijabla1, Head);
-	if (status1 != EXIT_SUCCESS)
+	s_1 = Pop(&varijabla1, Head);
+	if (s_1 != EXIT_SUCCESS)
 		return -1;
 
 	switch (op)
@@ -172,7 +171,6 @@ int Operacija(Position Head, char op)
 		return -1;
 	}
 	}
-
 	Push(Head, rez);
 
 	return EXIT_SUCCESS;
@@ -182,16 +180,16 @@ int RacunDat(char* dat)
 {
 
 	FILE* fp = NULL;
-	int fpDuljina = 0;
 	char* buffer = NULL;
-	char* readingBuffer = NULL;
+	char* currentBuffer = NULL;
 	int procitan_bb = 0;
 	char op = 0; //racunska operacija
 	double vrijednost = 0;
-	int status = 0;
 	int brojac = 0;
+	int status = 0;
 	El Head = { .broj = 0, .next = NULL };
-	fp = fopen("input.txt", "r");
+
+	fp = fopen( dat, "r");
 
 	if (!fp)
 	{
@@ -199,15 +197,7 @@ int RacunDat(char* dat)
 		return -1;
 	}
 
-	
-	fseek(fp, 0, SEEK_END);//sets the file position of the stream to a given offset. 
-                        //The pointer associated with the file is moved to that offset.
-                        
-
-	fpDuljina = ftell(fp); //used to get the total size of file
-                          // after moving the file pointer at the end of the file
-
-	buffer = (char*)malloc((fpDuljina)*sizeof(char));
+	buffer = (char*)malloc( MAX_SIZE*sizeof(char));
 
 	if (!buffer)
 	{
@@ -215,29 +205,27 @@ int RacunDat(char* dat)
 		return -1;
 	}
 
-	rewind(fp);//sets the file position to the beginning of the file of the given stream.
-
-	fread(buffer, sizeof(char), fpDuljina, fp);//reads up to count items of size length from the input stream and stores them in the given buffer
+	fgets(buffer,MAX_SIZE,fp);
 
 	printf("Postfixi iznose: \n");
 	fclose(fp);
 
-	readingBuffer = buffer;
-	while (strlen(readingBuffer) > 0)
+	currentBuffer = buffer;
+	while (strlen(currentBuffer) > 0)
 	{
-		brojac = sscanf(readingBuffer, " %lf %n", &vrijednost, &procitan_bb); //the function returns the number of variables filled
+		brojac = sscanf(currentBuffer, " %lf %n", &vrijednost, &procitan_bb); //the function returns the number of variables filled
 																			//cita vijednost
 
 		if (brojac == 1)
 		{
 			//stavlja vrijednost na pocetak liste ako je tipa double
 			Push(&Head, vrijednost);
-			readingBuffer += procitan_bb; //i++
+			currentBuffer += procitan_bb; //i++
 		}
 
 		else
 		{
-			sscanf(readingBuffer, " %c %n", &op, &procitan_bb);  //cita znak operacije
+			sscanf(currentBuffer, " %c %n", &op, &procitan_bb);  //cita znak operacije
 			status = Operacija(&Head, op); //Sa statusom napravit provjeru , ukoliko vrati -1 izbrisati listu 
 
 			if (status != EXIT_SUCCESS)
@@ -249,7 +237,7 @@ int RacunDat(char* dat)
 				}
 				return -1;
 			}
-				readingBuffer += procitan_bb; //i++
+				currentBuffer += procitan_bb; //i++
 			}
 		}
 	
