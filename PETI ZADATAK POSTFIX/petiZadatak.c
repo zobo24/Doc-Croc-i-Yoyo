@@ -20,7 +20,7 @@ Position MakeElement(double broj);
 int InsertAfter(Position P, Position newElement);
 int Push(Position Head, double broj);
 int DeleteAfter(Position P);
-int Pop(double* destinacija, Position Head);
+int Pop(double* trazeni, Position Head);
 int Operacija(Position Head, char op);
 int RacunDat(char *dat);
 int CleanUp(Position Head);
@@ -91,7 +91,7 @@ int Pop(double* trazeni, Position Head)
 
 	if (!clan) //prvi == NULL
 	{
-		perror("\n Operacije su izvrsene ili nesto nije u redu sa zadanim postfix-om :)!!\n");
+		perror("\n Kraj :)!!\n");
 		return -1;
 	}
 
