@@ -89,7 +89,7 @@ int Pop(double* trazeni, Position Head)
 {
 	Position clan = Head->next;
 
-	if (!clan) //prvi == NULL
+	if (!clan) //clan == NULL
 	{
 		perror("\n Kraj :)!!\n");
 		return -1;
@@ -134,21 +134,21 @@ int Operacija(Position Head, char op)
 	case '+':
 	{
 		rez = varijabla1 + varijabla2;
-		printf("%lf %c %lf = %lf\n", varijabla1, op, varijabla2, rez);
+		printf("%.3lf %c %.3lf = %.3lf\n", varijabla1, op, varijabla2, rez);
 		break;
 	}
 
 	case '-':
 	{
 		rez = varijabla1 - varijabla2;
-		printf("%lf %c %lf = %lf\n", varijabla1, op, varijabla2, rez);
+		printf("%.3lf %c %.3lf = %.3lf\n", varijabla1, op, varijabla2, rez);
 		break;
 	}
 
 	case '*':
 	{
 		rez = varijabla1 * varijabla2;
-		printf("%lf %c %lf = %lf\n", varijabla1, op, varijabla2, rez);
+		printf("%.3lf %c %.3lf = %.3lf\n", varijabla1, op, varijabla2, rez);
 		break;
 	}
 
@@ -160,7 +160,7 @@ int Operacija(Position Head, char op)
 			return -1;
 		}
 		rez = varijabla1 / varijabla2;
-		printf("%lf %c %lf = %lf\n", varijabla1, op, varijabla2, rez);
+		printf("%.3lf %c %.3lf = %.3lf\n", varijabla1, op, varijabla2, rez);
 		break;
 	}
 
