@@ -69,8 +69,8 @@ int Izbornik(Position root, lPosition head){
     char odabir[MAX_SIZE] = { 0 };
 
     printf("md [...] - Dodaj novi direktorij\n"); //dodaj dite i povezi dite s bratom
-	printf("cd [...] - Otvori direktorij\n"); //stavi dite na STOG (novi "root") 
-	printf("cd.. - Vrati na prethodni direktorij\n"); //pop sve do "root" od tog pod-direktorija
+	printf("cd [...] - Otvori direktorij\n"); //dodaj dite poslije head-a, tako da je root uvik next na NULL 
+	printf("cd.. - Vrati na prethodni direktorij\n"); //izbrisi mu svu dicu i vrati na na prethodni, na roditelja dice
 	printf("dir - Ispis pod-direktorija trenutnog direktorija\n");//ispis dice trenutnog direktorija
 	printf("exit - KRAJ\n\n");
 
@@ -173,7 +173,7 @@ int StvoriStablo(Position trenutni){
 }
 
 //otvaranje -> postavljanje direktorija  cd
-//trenutni postaje "root" pomocu STOGA
+//dodavanje novog direktorija na pocetak liste
 Position OpenDirec(Position trenutni, lPosition head){
 
     Position s;
@@ -198,8 +198,8 @@ Position OpenDirec(Position trenutni, lPosition head){
     return s;
 }
 
-//Stavljanje na stog
-//Zadnji clan stoga je root direktorija, a ostali su pod-direktoriji
+//Dodavanje direktorija na pocetak liste
+//Zadnji clan liste je root direktorij, a ostali su pod-direktoriji
 int Push(lPosition head,Position direktorij){
 
     lPosition p = (lPosition)malloc(sizeof(lista));
