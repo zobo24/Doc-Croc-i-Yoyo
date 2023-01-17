@@ -1,0 +1,5 @@
+Zadar 70000
+Split 200000
+Zagreb 900000
+Osijek 150000
+Rijeka 50000
